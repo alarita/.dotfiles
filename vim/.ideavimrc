@@ -1,0 +1,11 @@
+set scrolloff=5
+set incsearch
+set relativenumber number
+
+imap jj <Esc>
+imap kk <Esc>
+
+let mapleader = " "
+
+nnoremap <leader>a $
+nnoremap <leader>i ^
