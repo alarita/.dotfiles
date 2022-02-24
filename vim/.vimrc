@@ -13,8 +13,8 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set incsearch
-
 set relativenumber number
+set pastetoggle=<F3>
 
 set colorcolumn=80
 highlight ColorColumn ctermbg=0 guibg=lightgrey
