@@ -14,6 +14,7 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set relativenumber number
+set autochdir
 set pastetoggle=<F3>
 
 set colorcolumn=80
