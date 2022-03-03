@@ -14,10 +14,10 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set relativenumber number
-set autochdir
+"set autochdir
 set pastetoggle=<F3>
 
-set colorcolumn=80
+set colorcolumn=120
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 imap jj <Esc>
@@ -34,6 +34,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'git@github.com:kien/ctrlp.vim.git'
     Plug 'git@github.com:Valloric/YouCompleteMe.git'
     Plug 'mbbill/undotree'
+    Plug 'shime/vim-livedown'
 call plug#end()
 
 colorscheme gruvbox
