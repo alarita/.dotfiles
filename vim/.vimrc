@@ -35,6 +35,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'git@github.com:Valloric/YouCompleteMe.git'
     Plug 'mbbill/undotree'
     Plug 'shime/vim-livedown'
+    Plug 'leafOfTree/vim-vue-plugin'
+    Plug 'w0rp/ale'
 call plug#end()
 
 colorscheme gruvbox
@@ -67,3 +69,19 @@ nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
 
 " Switch between buffers
 nnoremap <F5> :buffers<CR>:buffer<Space>
+
+" Tooggle centering
+nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
+
+" Run npm run test
+nnoremap <Leader>tt :!npm run test<CR>
+
+" Set ESLint as your plugging manager
+let g:ale_fixers = {
+ \ 'javascript': ['eslint']
+ \ }
+
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
+let g:ale_fix_on_save = 1
+
