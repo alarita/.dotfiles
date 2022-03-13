@@ -37,6 +37,13 @@ call plug#begin('~/.vim/plugged')
     Plug 'shime/vim-livedown'
     Plug 'leafOfTree/vim-vue-plugin'
     Plug 'w0rp/ale'
+    Plug 'tpope/vim-surround'
+    Plug 'preservim/nerdtree'
+    Plug 'vim-syntastic/syntastic'
+    Plug 'tpope/vim-commentary'
+    Plug 'ludovicchabant/vim-gutentags'
+    Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
+    Plug 'posva/vim-vue'
 call plug#end()
 
 colorscheme gruvbox
@@ -67,6 +74,15 @@ nnoremap <silent> <Leader>- :vertical resize -5<CR>
 nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
 nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
 
+" NerdTree Mapping
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+
+" Open lazygit
+nnoremap <leader>lg :!lazygit<CR>
+
 " Switch between buffers
 nnoremap <F5> :buffers<CR>:buffer<Space>
 
@@ -78,10 +94,20 @@ nnoremap <Leader>tt :!npm run test<CR>
 
 " Set ESLint as your plugging manager
 let g:ale_fixers = {
- \ 'javascript': ['eslint']
- \ }
+\ 'javascript': ['eslint']
+\ }
 
 let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
 let g:ale_fix_on_save = 1
 
+" Vim syntastic
+execute pathogen#infect()
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
