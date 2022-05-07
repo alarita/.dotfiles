@@ -23,6 +23,8 @@ set noshowmode
 set colorcolumn=120
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
+" mapping
+
 imap jj <Esc>
 imap kk <Esc>
 
@@ -34,7 +36,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-fugitive'
     Plug 'leafgarland/typescript-vim'
     Plug 'vim-utils/vim-man'
-    Plug 'git@github.com:kien/ctrlp.vim.git'
+    Plug 'https://github.com/kien/ctrlp.vim.git'
     Plug 'mbbill/undotree'
     Plug 'shime/vim-livedown'
     Plug 'leafOfTree/vim-vue-plugin'
