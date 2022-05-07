@@ -1,0 +1,85 @@
+create_branch () {
+  branch=$1
+  branch=${branch// /\-}
+  base_branch=$2
+  git checkout $base_branch
+  git fetch
+  git pull
+
+  echo Creating Branch $branch
+  git checkout -b $branch
+
+  echo 'Publish to upstream? (y/n)'
+  read upstream
+
+  if [[ $upstream == 'y' ]]
+  then
+     git push -u origin $branch
+  fi
+}
+
+open_spx_cloud_core () {
+  nvm use 14
+  sudo ntpdate -s time.windows.com
+  cd ~/Codes/spinetix/cloud-core
+  git fetch
+  aws sso login --profile spx-assh
+  npm run co:login
+  npm ci
+}
+
+open_spx_init() {
+  export AWS_PROFILE=spinetix
+  export AWS_REGION=eu-central-1
+  nvm use 14
+  gh auth login
+  git fetch
+  yarn --ignore-engines
+
+  echo 'Initialized CDK? (y/n)'
+  read withCdk
+
+  if [[ $withCdk == 'y' ]]
+  then
+	  cd cdk
+
+	  aws sso login --profile spx-assh
+	  npm run co:login
+	  npm ci
+	  ssocreds -p spx-assh
+	  ..
+  fi
+}
+
+open_spx_cloud_backend () {
+  cd ~/Codes/spinetix/cloud-backend
+  open_spx_init
+}
+
+open_spx_cloud_iot () {
+  cd ~/Codes/spinetix/cloud-iot-enrollment
+  open_spx_init
+}
+
+create_release () {
+  echo 'Continue to create release and publish' $1'? (y/n) '
+  read response
+
+  if [[ $response == 'y' ]]
+  then
+    git flow release start $1
+    git flow release publish $1
+  fi
+}
+
+undo_commit () {
+  git log --name-status HEAD^..HEAD
+  echo 'Undo last commit? (y/n)'
+  read response
+
+  if [[ $response == 'y' ]]
+  then
+	 git reset --soft HEAD~1
+	 git restore --staged .
+  fi
+}
