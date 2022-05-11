@@ -5,9 +5,8 @@
 " Show a few lines of context around the cursor. Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
 set syntax on
-set scrolloff=999
+" set scrolloff=999
 
-" Do incremental searching.
 set incsearch
 
 set relativenumber number
