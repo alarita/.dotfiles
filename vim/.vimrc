@@ -52,10 +52,11 @@ call plug#begin('~/.vim/plugged')
         \ 'do': 'make install'
       \}
     Plug 'acro5piano/import-js-from-history'
+    Plug 'morhetz/gruvbox'
 call plug#end()
 
 " Load the colorscheme
-colorscheme gruvbox
+autocmd vimenter * ++nested colorscheme gruvbox
 set background=dark
 
 if executable('rg')
