@@ -1,8 +1,4 @@
-syntax on
-set nocompatible
-
 call plug#begin('~/.vim/plugged')
-    " Plug 'https://github.com/ycm-core/YouCompleteMe'
     Plug 'jelera/vim-javascript-syntax'
       
     " Use release branch (recommend)
@@ -22,7 +18,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     Plug 'ryanoasis/vim-devicons'
-    Plug 'vim-syntastic/syntastic'
+    " Plug 'vim-syntastic/syntastic'
     Plug 'tpope/vim-commentary'
     Plug 'itchyny/lightline.vim'
     Plug 'miyakogi/conoline.vim'
@@ -33,13 +29,19 @@ call plug#begin('~/.vim/plugged')
     Plug 'acro5piano/import-js-from-history'
     " Plug 'morhetz/gruvbox'
     Plug 'lifepillar/vim-gruvbox8'
-    Plug 'HerringtonDarkholme/yats.vim'
     Plug 'airblade/vim-gitgutter'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
+    Plug 'voldikss/vim-floaterm'
+    Plug 'tpope/vim-sleuth'
+    Plug 'geekjuice/vim-mocha'
+    Plug 'nvim-treesitter/nvim-treesitter' 
+    " Plug 'p00f/nvim-ts-rainbow'
+    " Plug 'luochen1990/rainbow'
 call plug#end()
 
 set encoding=utf-8
+set termguicolors
 set hidden
 set laststatus=2
 " set cmdheight=2
@@ -61,17 +63,25 @@ set nowritebackup
 set undofile
 set incsearch
 set relativenumber number
+
 set pastetoggle=<F3>
 set noshowmode
 
-let g:yats_host_keyword = 1
-set re=0
 let g:javascript_plugin_jsdoc = 1
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+  },
+}
+EOF
 
 function! GitStatus()
   let [a,m,r] = GitGutterGetHunkSummary()
   return printf('+%d ~%d -%d', a, m, r)
 endfunction
+
 set statusline+=%{GitStatus()}
 let g:gitgutter_sign_allow_clobber = 1
 let g:gitgutter_highlight_linenrs = 1
@@ -222,8 +232,10 @@ let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-pairs',
   \ 'coc-tsserver',
-  \ 'coc-prettier',
   \ 'coc-json',
+  \ 'coc-yaml',
+  \ 'coc-typos',
+  \ 'coc-highlight',
   \ ]
 
 " Coc.nvim END
@@ -280,10 +292,6 @@ nnoremap <silent> <Leader>tn :set nu! rnu!<CR>
 
 nmap <silent> <C-l> <Plug>(jsdoc)
 
-nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
-nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
-nnoremap <silent> <Leader>gr :YcmCompleter GoToReferences<CR>
-
 " NerdTree Mapping
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
@@ -292,7 +300,7 @@ nnoremap <C-f> :NERDTreeFind<CR>
 let NERDTreeShowHidden=1
 
 " Open lazygit
-nnoremap <leader>lg :!lazygit<CR>
+nnoremap <leader>lg :FloatermNew --height=0.95 --width=0.95 --wintype=float --title=lazygit lazygit<CR>
 
 " Switch between buffers
 nnoremap <F5> :buffers<CR>:buffer<Space>
@@ -301,14 +309,13 @@ nnoremap <F5> :buffers<CR>:buffer<Space>
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
 " Run npm run test
-nnoremap <Leader>tt :w<CR> :!npm run test<CR>
+nnoremap <Leader>tt :w<CR> :FloatermNew --position=topright --title=testrunner --autoclose=0 npm run test<CR>
 
 " Telescope
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>ff <cmd>Telescope find_files hidden=true<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep hidden=true<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
 
 " Set ESLint as your plugging manager
 let g:ale_fixers = {
@@ -318,4 +325,13 @@ let g:ale_fixers = {
 let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
 let g:ale_fix_on_save = 1
+
+" vim mocha
+let g:mocha_js_command = "FloatermNew --title=mocha-tests --autoclose=0 --height=0.95 --position=topright node bundle-tests --entrypath={spec} && yarn mocha --enable-source-maps --require=src/test/setup.js test-bundles/{spec}"
+nnoremap <Leader>tc :call RunCurrentSpecFile()<CR>
+nnoremap <Leader>ti :call RunNearestSpec()<CR>
+nnoremap <Leader>tl :call RunLastSpec()<CR>
+
+" tree sitter
+" au BufEnter * TSBufEnable highlight
 
