@@ -44,7 +44,7 @@ set encoding=utf-8
 set termguicolors
 set hidden
 set laststatus=2
-" set cmdheight=2
+set cmdheight=1
 set updatetime=300
 set shortmess+=c
 set noerrorbells
@@ -68,11 +68,25 @@ set pastetoggle=<F3>
 set noshowmode
 
 let g:javascript_plugin_jsdoc = 1
+let scrolloff=10
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "javascript", "typescript", "html", "vue", "yaml", "lua", "vim", "json", "rust", "go", "scss" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
   highlight = {
+    -- `false` will disable the whole extension
     enable = true,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
   },
 }
 EOF
@@ -206,6 +220,15 @@ endif
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
@@ -235,14 +258,9 @@ let g:coc_global_extensions = [
   \ 'coc-json',
   \ 'coc-yaml',
   \ 'coc-typos',
-  \ 'coc-highlight',
   \ ]
 
 " Coc.nvim END
-
-" escape mapping
-imap jj <Esc>
-imap kk <Esc>
 
 " Load the colorscheme
 " autocmd vimenter * ++nested colorscheme gruvbox
@@ -278,6 +296,7 @@ nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
 nnoremap <leader>ww :w<CR>
 nnoremap <leader>cw :only<CR>
+nnoremap <leader>ch :noh<CR>
 if has('nvim')
   nnoremap <leader>ec :e ~/Codes/alarita/.dotfiles/vim/init.vim<CR>
 else
@@ -327,11 +346,10 @@ let g:ale_sign_warning = '⚠️'
 let g:ale_fix_on_save = 1
 
 " vim mocha
-let g:mocha_js_command = "FloatermNew --title=mocha-tests --autoclose=0 --height=0.95 --position=topright node bundle-tests --entrypath={spec} && yarn mocha --enable-source-maps --require=src/test/setup.js test-bundles/{spec}"
+let g:mocha_js_command = "FloatermNew --title=mocha-tests --autoclose=0 --height=0.95 --position=topright node bundle-tests --entrypath={spec} && yarn mocha --timeout 5000 --enable-source-maps --require=test/setup.js test-bundles/{spec}"
 nnoremap <Leader>tc :call RunCurrentSpecFile()<CR>
 nnoremap <Leader>ti :call RunNearestSpec()<CR>
 nnoremap <Leader>tl :call RunLastSpec()<CR>
 
-" tree sitter
-" au BufEnter * TSBufEnable highlight
-
+" cloud-backend keymap
+nnoremap <Leader>t1 :FloatermNew --title=devtest1 --autoclose=0 --position=topright AWS_PROFILE=spx-assh yarn sls spx-post-deploy<cr>
