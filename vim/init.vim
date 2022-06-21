@@ -255,6 +255,8 @@ let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-pairs',
   \ 'coc-tsserver',
+  \ 'coc-vue',
+  \ 'coc-vetur',
   \ 'coc-json',
   \ 'coc-yaml',
   \ 'coc-typos',
@@ -346,10 +348,10 @@ let g:ale_sign_warning = '⚠️'
 let g:ale_fix_on_save = 1
 
 " vim mocha
-let g:mocha_js_command = "FloatermNew --title=mocha-tests --autoclose=0 --height=0.95 --position=topright node bundle-tests --entrypath={spec} && yarn mocha --timeout 5000 --enable-source-maps --require=test/setup.js test-bundles/{spec}"
-nnoremap <Leader>tc :call RunCurrentSpecFile()<CR>
-nnoremap <Leader>ti :call RunNearestSpec()<CR>
-nnoremap <Leader>tl :call RunLastSpec()<CR>
+let g:mocha_js_command = "FloatermNew --title=mocha-tests --autoclose=0 --height=0.95 --position=topright node bundle-tests --entrypath={spec} && yarn mocha --timeout 5000 --enable-source-maps --require=src/test/setup.js test-bundles/{spec}"
+nnoremap <Leader>tc :wa<CR> :call RunCurrentSpecFile()<CR>
+nnoremap <Leader>ti :wa<CR> :call RunNearestSpec()<CR>
+nnoremap <Leader>tl :wa<CR> :call RunLastSpec()<CR>
 
 " cloud-backend keymap
 nnoremap <Leader>t1 :FloatermNew --title=devtest1 --autoclose=0 --position=topright AWS_PROFILE=spx-assh yarn sls spx-post-deploy<cr>
