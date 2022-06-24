@@ -63,6 +63,7 @@ set nowritebackup
 set undofile
 set incsearch
 set relativenumber number
+set splitright
 
 set pastetoggle=<F3>
 set noshowmode
@@ -299,6 +300,9 @@ nnoremap <leader>l :wincmd l<CR>
 nnoremap <leader>ww :w<CR>
 nnoremap <leader>cw :only<CR>
 nnoremap <leader>ch :noh<CR>
+" Alt-q to quit current file
+nnoremap <A-q> :bw!<CR>
+nnoremap <A-w> :bd!<CR>
 if has('nvim')
   nnoremap <leader>ec :e ~/Codes/alarita/.dotfiles/vim/init.vim<CR>
 else
@@ -348,10 +352,43 @@ let g:ale_sign_warning = '⚠️'
 let g:ale_fix_on_save = 1
 
 " vim mocha
-let g:mocha_js_command = "FloatermNew --title=mocha-tests --autoclose=0 --height=0.95 --position=topright node bundle-tests --entrypath={spec} && yarn mocha --timeout 5000 --enable-source-maps --require=src/test/setup.js test-bundles/{spec}"
+let g:mocha_js_command = ":vsplit term://node bundle-tests --entrypath={spec} && yarn mocha --timeout 5000 --enable-source-maps --require=src/test/setup.js test-bundles/{spec}"
 nnoremap <Leader>tc :wa<CR> :call RunCurrentSpecFile()<CR>
 nnoremap <Leader>ti :wa<CR> :call RunNearestSpec()<CR>
 nnoremap <Leader>tl :wa<CR> :call RunLastSpec()<CR>
 
 " cloud-backend keymap
 nnoremap <Leader>t1 :FloatermNew --title=devtest1 --autoclose=0 --position=topright AWS_PROFILE=spx-assh yarn sls spx-post-deploy<cr>
+
+" Terminal Function
+let g:term_buf = 0
+let g:term_win = 0
+function! TermToggle(height)
+    if win_gotoid(g:term_win)
+        hide
+    else
+        botright new
+        exec "resize " . a:height
+        try
+            exec "buffer " . g:term_buf
+        catch
+            call termopen($SHELL, {"detach": 0})
+            let g:term_buf = bufnr("")
+            set nonumber
+            set norelativenumber
+            set signcolumn=no
+        endtry
+        startinsert!
+        let g:term_win = win_getid()
+    endif
+endfunction
+
+" Toggle terminal on/off (neovim)
+nnoremap <A-t> :call TermToggle(20)<CR>
+inoremap <A-t> <Esc>:call TermToggle(20)<CR>
+tnoremap <A-t> <C-\><C-n>:call TermToggle(20)<CR>
+
+" Terminal go back to normal mode
+tnoremap <Esc> <C-\><C-n>
+tnoremap :q! <C-\><C-n>:q!<CR>
+
