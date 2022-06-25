@@ -334,7 +334,7 @@ nnoremap <F5> :buffers<CR>:buffer<Space>
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
 " Run npm run test
-nnoremap <Leader>tt :w<CR> :FloatermNew --position=topright --title=testrunner --autoclose=0 npm run test<CR>
+nnoremap <Leader>tt :w<CR> :edit term://yarn test<CR>
 
 " Telescope
 nnoremap <leader>ff <cmd>Telescope find_files hidden=true<cr>
