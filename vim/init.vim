@@ -48,10 +48,10 @@ set cmdheight=1
 set updatetime=300
 set shortmess+=c
 set noerrorbells
-set tabstop=2 softtabstop=2
-set shiftwidth=2
+" set tabstop=2 softtabstop=2
+" set shiftwidth=2
 set smarttab
-set expandtab
+" set expandtab
 set smartindent
 set nu
 set nowrap
@@ -310,7 +310,7 @@ else
 endif
 nnoremap <leader>u :UndotreeShow<CR>
 nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
-nnoremap <Leader>ps :Rg<SPACE>
+nnoremap <Leader>rg :Rg<SPACE>
 nnoremap <silent> <Leader>+ :vertical resize +5<CR>
 nnoremap <silent> <Leader>- :vertical resize -5<CR>
 nnoremap <silent> <Leader>tn :set nu! rnu!<CR>
