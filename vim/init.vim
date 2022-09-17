@@ -334,7 +334,7 @@ nnoremap <F5> :buffers<CR>:buffer<Space>
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
 " Run npm run test
-nnoremap <Leader>tt :w<CR> :edit term://yarn test<CR>
+nnoremap <Leader>tt :w<CR> :vsplit term://yarn test<CR> :norm G<CR>
 
 " Telescope
 nnoremap <leader>ff <cmd>Telescope find_files hidden=true<cr>
