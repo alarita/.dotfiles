@@ -36,8 +36,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-sleuth'
     Plug 'geekjuice/vim-mocha'
     Plug 'nvim-treesitter/nvim-treesitter' 
+    Plug 'nvim-treesitter/nvim-treesitter-context'
     " Plug 'p00f/nvim-ts-rainbow'
     " Plug 'luochen1990/rainbow'
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+    Plug 'APZelos/blamer.nvim'
 call plug#end()
 
 set encoding=utf-8
@@ -89,6 +92,10 @@ require'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+}
+
+require'treesitter-context'.setup{
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
 }
 EOF
 
@@ -349,10 +356,11 @@ let g:ale_fixers = {
 
 let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
-let g:ale_fix_on_save = 1
+" let g:ale_fix_on_save = 1
 
 " vim mocha
-let g:mocha_js_command = ":vsplit term://node bundle-tests --entrypath={spec} && yarn mocha --timeout 5000 --enable-source-maps --require=src/test/setup.js test-bundles/{spec}"
+let g:mocha_js_command = ":vsplit term://node bundle-tests --entrypath={entry} && yarn mocha --timeout 5000 --enable-source-maps --require=src/test/setup.js test-bundles/{spec}"
+let g:mocha_ts_command = ":vsplit term://node bundle-tests --entrypath={entry} && yarn mocha --timeout 5000 --enable-source-maps --require=src/test/setup.js test-bundles/{spec}"
 nnoremap <Leader>tc :wa<CR> :call RunCurrentSpecFile()<CR>
 nnoremap <Leader>ti :wa<CR> :call RunNearestSpec()<CR>
 nnoremap <Leader>tl :wa<CR> :call RunLastSpec()<CR>
