@@ -543,6 +543,7 @@ let g:ale_fixers = {
 let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
 " let g:ale_fix_on_save = 1
+nnoremap <leader>ef :CocCommand eslint.executeAutofix <CR>
 
 " vim mocha
 let g:mocha_js_command = ":vsplit term://node bundle-tests.js --entrypath={entry} && yarn mocha --timeout 5000 --enable-source-maps --require=src/test/setup.js test-bundles/{spec}"
