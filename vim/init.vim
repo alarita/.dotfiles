@@ -42,6 +42,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
     Plug 'APZelos/blamer.nvim'
     Plug 'github/copilot.vim'
+    Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 set encoding=utf-8
@@ -173,7 +174,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 
 
 -- Symbol renaming.
-keyset("n", "<leader>rn", "<Plug>(coc-rename)", {silent = true})
+keyset("n", "<F2>", "<Plug>(coc-rename)", {silent = true})
 
 
 -- Formatting selected code.
@@ -587,3 +588,20 @@ tnoremap <A-t> <C-\><C-n>:call TermToggle(20)<CR>
 tnoremap <Esc> <C-\><C-n>
 tnoremap :q! <C-\><C-n>:q!<CR>
 
+" EASY MOTION
+" let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+" nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case-insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
