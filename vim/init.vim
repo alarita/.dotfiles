@@ -43,6 +43,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'APZelos/blamer.nvim'
     Plug 'github/copilot.vim'
     Plug 'easymotion/vim-easymotion'
+    Plug 'christianrondeau/vim-base64'
 call plug#end()
 
 set encoding=utf-8
@@ -605,3 +606,7 @@ let g:EasyMotion_smartcase = 1
 " JK motions: Line motions
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
+
+" Vertical navigation
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
