@@ -42,7 +42,7 @@ call plug#begin('~/.vim/plugged')
     " Plug 'luochen1990/rainbow'
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
     Plug 'APZelos/blamer.nvim'
-    Plug 'github/copilot.vim'
+    " Plug 'github/copilot.vim'
     Plug 'easymotion/vim-easymotion'
     Plug 'christianrondeau/vim-base64'
 call plug#end()
