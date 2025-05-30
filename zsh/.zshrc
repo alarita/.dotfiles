@@ -234,3 +234,28 @@ undo_commit () {
 
 export PATH=~/.local/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
+
+# npm_all_install function to install dependencies in all directories
+function npm_all_install() {
+  local current_dir=$(pwd)
+  
+  # First check if there is a package.json in current directory
+  if [ -f "./package.json" ]; then
+    echo "
+Installing dependencies in current directory..."
+    npm install
+  fi
+
+  # Then process all subdirectories
+  echo "
+Finding all package.json files in subdirectories and installing dependencies..."
+  find . -mindepth 2 -name package.json -not -path "*/node_modules/*" -exec sh -c '
+    dir=$(dirname "$1")
+    echo "
+Installing dependencies in $dir..."
+    cd "$dir"
+    npm install
+    cd "$2"
+  ' sh {} "$current_dir" \;
+}
+
