@@ -31,7 +31,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'lifepillar/vim-gruvbox8'
     Plug 'airblade/vim-gitgutter'
     Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
     Plug 'voldikss/vim-floaterm'
     Plug 'tpope/vim-sleuth'
     " Plug 'geekjuice/vim-mocha'
@@ -48,7 +48,7 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 set encoding=utf-8
-set termguicolors
+" set termguicolors
 set hidden
 set laststatus=2
 set cmdheight=1
@@ -499,6 +499,7 @@ nnoremap <leader>ch :noh<CR>
 " Alt-q to quit current file
 nnoremap <A-q> :bw!<CR>
 nnoremap <A-w> :bd!<CR>
+nnoremap ∑ :bw!<CR>
 if has('nvim')
   nnoremap <leader>ec :e ~/Codes/alarita/.dotfiles/vim/init.vim<CR>
 else
@@ -585,6 +586,10 @@ endfunction
 nnoremap <A-t> :call TermToggle(20)<CR>
 inoremap <A-t> <Esc>:call TermToggle(20)<CR>
 tnoremap <A-t> <C-\><C-n>:call TermToggle(20)<CR>
+nnoremap † :call TermToggle(20)<CR>
+inoremap † <Esc>:call TermToggle(20)<CR>
+tnoremap † <C-\><C-n>:call TermToggle(20)<CR>
+
 
 " Terminal go back to normal mode
 tnoremap <Esc> <C-\><C-n>

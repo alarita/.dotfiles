@@ -12,11 +12,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+PROMPT='%D{%Y-%m-%d %H:%M:%S} %n@%m %~%# '
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/alarita/.oh-my-zsh"
+export ZSH="/Users/alarita/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -116,8 +118,8 @@ source $ZSH/oh-my-zsh.sh
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-. ~/.aliases
+# source ~/powerlevel10k/powerlevel10k.zsh-theme
+# . ~/.aliases
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -234,6 +236,7 @@ undo_commit () {
 
 export PATH=~/.local/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
+export PATH="$HOME/.volta/bin:$PATH"
 
 # npm_all_install function to install dependencies in all directories
 function npm_all_install() {
@@ -259,3 +262,12 @@ Installing dependencies in $dir..."
   ' sh {} "$current_dir" \;
 }
 
+# AWS Profile management alias
+alias spx="export AWS_PROFILE=spx-assh && ssocreds -p spx-assh"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/alarita/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+export PATH="/Users/alarita/.config/herd-lite/bin:$PATH"
+export PHP_INI_SCAN_DIR="/Users/alarita/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
